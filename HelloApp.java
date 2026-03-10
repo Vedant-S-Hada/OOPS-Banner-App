@@ -1,75 +1,59 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HelloApp {
 
-    // Static Inner Class
-    static class CharacterPatternMap {
-        private char character;
-        private String[] pattern;
-
-        public CharacterPatternMap(char character, String[] pattern) {
-            this.character = character;
-            this.pattern = pattern;
-        }
-
-        public char getCharacter() {
-            return character;
-        }
-
-        public String[] getPattern() {
-            return pattern;
-        }
-    }
-
     public static void main(String[] args) {
 
-        // Store character patterns
-        List<CharacterPatternMap> patterns = new ArrayList<>();
+        Map<Character, String[]> patternMap = new HashMap<>();
 
-        patterns.add(new CharacterPatternMap('O', new String[]{
+        patternMap.put('O', new String[]{
                 " *** ",
                 "*   *",
                 "*   *",
                 "*   *",
                 " *** "
-        }));
+        });
 
-        patterns.add(new CharacterPatternMap('P', new String[]{
+        patternMap.put('P', new String[]{
                 "**** ",
                 "*   *",
                 "**** ",
                 "*    ",
                 "*    "
-        }));
+        });
 
-        patterns.add(new CharacterPatternMap('S', new String[]{
+        patternMap.put('S', new String[]{
                 " ****",
                 "*    ",
                 " *** ",
                 "    *",
                 "**** "
-        }));
+        });
 
-        String word = "OOPS";
+        renderBanner("OOPS", patternMap);
+    }
 
-        StringBuilder[] banner = new StringBuilder[5];
-        for (int i = 0; i < 5; i++) {
+    public static void renderBanner(String word, Map<Character, String[]> map) {
+
+        int height = 5;
+
+        StringBuilder[] banner = new StringBuilder[height];
+
+        for (int i = 0; i < height; i++) {
             banner[i] = new StringBuilder();
         }
 
         for (char c : word.toCharArray()) {
 
-            for (CharacterPatternMap cp : patterns) {
+            String[] pattern = map.get(c);
 
-                if (cp.getCharacter() == c) {
+            if (pattern != null) {
 
-                    String[] p = cp.getPattern();
-
-                    for (int i = 0; i < 5; i++) {
-                        banner[i].append(p[i]).append(" ");
-                    }
-
+                for (int i = 0; i < height; i++) {
+                    banner[i].append(pattern[i]).append(" ");
                 }
+
             }
         }
 
